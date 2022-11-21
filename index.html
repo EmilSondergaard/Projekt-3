@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html lang= "en">
+    <head>
+        <title> ******* Bytebattle ******* </title>
+        <meta chjarset = "uft-8">
+    </head>
+
+    <html>
+           <h1>BYTEBATTLE </h1>
+        </body>
+        </html>
+
+
+
 <html>
     <header> 
         <script src="./elements.js"></script>
@@ -5,11 +19,12 @@
     <body>
         <div style="width: 50%; display: table;">
             <div style="display: table-row">
-                <div style="width: 300px; display: table-cell;">
+                <div style="width: 300px; display: table-cell; background-color: red;">
                     <h1>Hold 1</h1>
                     <h3>Holdnavn: </h3>
-                    <input id="hold1-navn" placeholder="indtast Hold" type="text" ></input>
+                    <input id="hold1-navn" placeholder="Indtast Hold" type="text" ></input>
                     </br>
+                    <h4>Studieretning: </h4>
                     <input name="studieretning1" id="softwareteknologi" type="radio"></input>
                     <label for="softwareteknologi"> Softwareteknologi </label></br>
                     <input name="studieretning1" id="elektriskenergiteknologi" type="radio"></input>
@@ -24,20 +39,23 @@
                     <label for="sundhedsteknologi"> Sundhedsteknologi </label></br>
                     <input name="studieretning1" id="elektronik" type="radio"></input>
                     <label for="elektronik"> Elektronik </label></br>
-                    
-                    <input id="hold1-tid" placeholder="indtast tid i sek" type="text" ></input>
-                    
-                    <button onclick="clickEvent()" id="gem" placeholder="indtast navn" type="button" >Gem oplysninger</button>
+                    <p id="newline"></p>
+
+                    <input id="hold1-tid" placeholder="Indtast tid i sek" type="text" ></input>
+                    <p id="newline"></p>
+                    <button onclick="clickEvent()" id="gem" placeholder="Indtast navn" type="button" >Gem oplysninger</button>
                     
                     
                     
                     
                 </div>
-                <div style="display: table-cell;"> 
+                <div style="display: table-cell; background-color: gold;"> 
+                    
                     <h1>Hold 2</h1>
                     <h3>Holdnavn: </h3>
-                    <input id="hold2-navn" placeholder="indtast hold" type="text" ></input>
+                    <input id="hold2-navn" placeholder="Indtast hold" type="text"></input>
                     </br>
+                    <h4>Studieretning: </h4>
                     <input name="studieretning2" id="softwareteknologi" type="radio"></input>
                     <label for="softwareteknologi"> Softwareteknologi </label></br>
                     <input name="studieretning2" id="elektriskenergiteknologi" type="radio"></input>
@@ -52,19 +70,22 @@
                     <label for="sundhedsteknologi"> Sundhedsteknologi </label></br>
                     <input name="studieretning2" id="elektronik" type="radio"></input>
                     <label for="elektronik"> Elektronik </label></br>
-                    
-                    <input id="hold2-tid" placeholder="indtast tid i sek" type="text" ></input>
+                    <p id="newline"></p>
+                    <input id="hold2-tid" placeholder="Indtast tid i sek" type="text" ></input>
                     
                 </div>
             </div>
         </div>
-        <div id="highscoreElement">
+            <div id="highscoreElement" style="display: table-cell; background-color: red;" ></div>
             <h1>Highscore</h1>
             <div id="highscore-container"></div>
         </div>
-        <div id="highscoreElement">
+
+  
+        <div id="olhighscoreElement">
+            <div style="display: table-row; background-color: gold;" ></div>
             <h1>Ølscore</h1>
-            <div id="highscore-container"></div>
+            <div id="ol-container"></div>
         </div>
     </body>
 </html>

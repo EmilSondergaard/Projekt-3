@@ -58,23 +58,47 @@ function Highscore(holdNavn, tid) {
 
 
 
-function checkStudy(){
+function checkStudy()
+{
+
     var beerElement = document.createElement("h1");
     beerElement.value = "Ølscore";
-if (document.getElementById("softwareteknologi") == true) {
-    sw = sw + 1.32;
-    let item1 = document.createElement("h2");
-            item1.innerHTML = `softwareteknologi: - ${sw} L`;
-            
-} 
-else if (document.getElementById("elektriskenergiteknologi") == true) 
-{
-    ee = ee + 1.32;
-    let item2 = document.createElement("h2");
-            item2.innerHTML = `elektriskenergiteknologi: - ${ee} L`;
+    var methods = document.getElementsByName('softwareteknologi');
+    for (var i=0; i<methods.length; i++) {
+         if (methods[i].checked == true) {
+             sw +=1.32;
+             alert(sw);
+            }
 }
-container1.appendChild(sw); 
-container1.appendChild(ee);
+
+//    if (document.getElementById('softwareteknologi').checked == true) 
+//    {
+//      sw = sw + 1.32;
+//    }
+//     else 
+//     {
+    
+//    }
+
+
+
+// if (document.getElementById("softwareteknologi") == 1) {
+//     sw = sw + 1.32;
+//     let item1 = document.createElement("h2");
+//             item1.innerHTML = `softwareteknologi: - ${sw} L`;
+            
+// } 
+// else if (document.getElementById("elektriskenergiteknologi") == 1) 
+// {
+//     ee = ee + 1.32;
+//     let item2 = document.createElement("h2");
+//             item2.innerHTML = `elektriskenergiteknologi: - ${ee} L`;
+// }
+// container1.appendChild(sw); 
+// container1.appendChild(ee);
+
+
+
 
 }
 
