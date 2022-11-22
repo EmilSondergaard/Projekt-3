@@ -1,10 +1,11 @@
-
-    var holdNavn1;
+src="https://unpkg.com/axios/dist/axios.min.js"
+   
+   var holdNavn1;
     var holdNavn2;
     var tid1;
     var tid2;
     var highscore = [];
-    var beerCount = [];
+    var serverArray = [];
     var uddannelse;
     var litres;
     var sw = 0;
@@ -13,7 +14,7 @@
     var ee = 0;
     var bt = 0;
     var m = 0;
-    var kf = 0;
+    var kt = 0;
 
 function beerScore (studieretning, liter){
     // var highscoreElement = document.createElement("h1");
@@ -36,7 +37,7 @@ function beerScore (studieretning, liter){
     // }
 }
 
-function Highscore(holdNavn, tid) {
+function sortData(holdNavn, tid) {
     var highscoreElement = document.createElement("h1");
     highscoreElement.value = "Highscore";
 
@@ -53,22 +54,34 @@ function Highscore(holdNavn, tid) {
         }
     }
     
-    console.log(highscore);
+    //console.log(highscore);
+    // send til server
 }
 
 
 
 function checkStudy()
 {
-
     var beerElement = document.createElement("h1");
     beerElement.value = "Ølscore";
-    var methods = document.getElementsByName('softwareteknologi');
-    for (var i=0; i<methods.length; i++) {
-         if (methods[i].checked == true) {
-             sw +=1.32;
-             alert(sw);
+         if (document.getElementsByName('softwareteknologi') == true) 
+            {
+            sw +=1.32;
+            } else if (document.getElementsByName('elektriskenergiteknologi') == true){
+            ee +=1.32;
+            } else if (document.getElementsByName('bioteknologi') == true){
+            bt +=1.32;
+            } else if (document.getElementsByName('kemiteknologi') == true){
+            kt +=1.32;
+            } else if (document.getElementsByName('maskinteknik') == true){
+            m +=1.32;
+            } else if (document.getElementsByName('sundhedsteknologi') == true){
+            st +=1.32;
+            } else if (document.getElementsByName('elektronik') == true){
+            e +=1.32;
             }
+
+            //send til server
 }
 
 //    if (document.getElementById('softwareteknologi').checked == true) 
@@ -98,9 +111,24 @@ function checkStudy()
 // container1.appendChild(ee);
 
 
+function updateData()
+{
+    setInterval(() => {  }, 5000);
+}
 
+
+function sendData(holdNavn, tid)
+{
+    var gameResult = {name: holdNavn, time: Number(tid)};
+    serverArray.push(gameResult);
+
+    axios.post('http://localhost:8080/', serverArray)
+    .then(response => {
+
+    }).catch(error => alert('Error sending name & time to server'));
 
 }
+
 
 function clickEvent() {
     holdNavn1 = document.getElementById("hold1-navn").value;
@@ -108,9 +136,14 @@ function clickEvent() {
     holdNavn2 = document.getElementById("hold2-navn").value;
     tid2 = document.getElementById("hold2-tid").value;
 
-    console.log("holdnavn: " +holdNavn1);
-    console.log("tid: " + tid1);
-    Highscore(holdNavn1, tid1);
-    Highscore(holdNavn2, tid2);
+    sendData(holdNavn1,tid1);
+    sendData(holdNavn2, tid2);
+    
+    sortData(holdNavn1, tid1);
+    sortData(holdNavn2, tid2);
+    
     checkStudy();
+
+
+    
 }
