@@ -5,7 +5,7 @@ src="https://unpkg.com/axios/dist/axios.min.js"
     var tid1;
     var tid2;
     var highscore = [];
-    var serverArray = [];
+    var result = [];
     var uddannelse;
     var litres;
     var sw = 0;
@@ -117,16 +117,32 @@ function updateData()
 }
 
 
-function sendData(holdNavn, tid)
+function sendData()
 {
-    var gameResult = {name: holdNavn, time: Number(tid)};
-    serverArray.push(gameResult);
+    axios.post('http://localhost:8080/api/highscore',
+    {
+        "Hold1": 
+        {
+            "Team Name": document.getElementById("hold1-navn").value,
+            "Time": parseInt(document.getElementById("hold1-tid").value)
+            //"Study": document.getElementById("")
+        },
+        "Hold2": 
+        {
+            "Team Name": document.getElementById("hold2-navn").value,
+            "Time": parseInt(document.getElementById("hold2-tid").value),
+        }
+    })
+    .then(response => {}).catch(error => alert('Try again'));     
+    
+}
 
-    axios.post('http://localhost:8080/', serverArray)
+function getData ()
+{
+    axios.get('http://localhost:8080/api/highscore')
     .then(response => {
-
-    }).catch(error => alert('Error sending name & time to server'));
-
+        result = response.data;
+    }).catch(error => alert('Could not get data'));
 }
 
 
@@ -136,13 +152,12 @@ function clickEvent() {
     holdNavn2 = document.getElementById("hold2-navn").value;
     tid2 = document.getElementById("hold2-tid").value;
 
-    sendData(holdNavn1,tid1);
-    sendData(holdNavn2, tid2);
+    sendData();
+    getData();
     
     sortData(holdNavn1, tid1);
-    sortData(holdNavn2, tid2);
     
-    checkStudy();
+   // checkStudy();
 
 
     
