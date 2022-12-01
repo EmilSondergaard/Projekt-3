@@ -129,6 +129,7 @@ function sortData() {
 
 function sendData()
 {
+    console.log("sending data");
     axios.post('http://localhost:8080/',
     {
         "Team_Name": document.getElementById("hold1-navn").value,
@@ -137,11 +138,12 @@ function sendData()
         
     })
     .then(response => {}).catch(error => console.error(error));//alert('Try again'));     
-    
+    console.log("sent data");
 }
 
 function getData ()
 {
+    console.log("fetching data");
     axios.get('http://localhost:8080/sendAllData')
     .then(response => {
         result = response.data;
