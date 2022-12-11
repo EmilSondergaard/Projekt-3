@@ -167,13 +167,77 @@ function clickEvent() {
    // checkStudy();
     
 }
+
 </script>
+    <head>
         <title> Bytebattle </title>
         <meta chjarset = "uft-8">
-    </head>
+        
+        <style>
 
-    <html>
-        <div  style="width: 760px; display: table-cell; background-color: silver;"> <h1> BYTEBATTLE </h1> </div>
+        body {
+          background-color: rgb(255, 208, 32);
+          font-family: Arial, sans-serif;
+        }
+        h1 {
+          font-family: Arial, sans-serif;
+            font-size: 50px;
+            font-style:  Lucida;
+            color: black;
+          
+        }
+
+    
+        p {
+          font-size: 18px;
+          text-align: justify;
+        }
+
+        button {
+          display: inline-block;
+          font-family: Arial, sans-serif;
+          font-size: 25px;
+          font-weight: bold;
+          background-color: olive;
+          color: black;
+          
+          padding: 30px 100px;
+          text-decoration: none;
+          border-radius: 5px;
+        }
+        button:hover {
+          background-color: orange;
+        }
+
+        input[type="radio"] {
+        color: blue;
+        width: 15px;
+        height: 15px;
+        }
+        input[type="radio"]:hover {
+        background-color: ;
+        cursor: pointer;
+        }
+        input::placeholder {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: black;
+        }
+        img {
+        width: 350px;
+        height: auto;
+        margin: auto;
+        }
+
+        </style>
+
+        <div  style="width: 100% ; display: table; overflow: auto; text-align: center; background-color: #FFD020;">
+        <h1 style="font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; color: black;">
+            
+            <img src="beers.gif" alt="beers" style="float: left;">
+            <img src="beers.gif" alt="beers" style="float: right;">
+            <h1>BYTEBATTLE</h1>
+        </div>
         </body>
         </html>
 
@@ -183,9 +247,9 @@ function clickEvent() {
     <header> 
      </header>
     <body>
-        <div style="width: 50%; display: table;">
+        <div style="width: 100%; display: table; overflow: auto">
             <div style="display: table-row">
-                <div style="width: 300px; display: table-cell; background-color: red;">
+                <div style="width: 500px; display: table-cell; background-color: rgb(236, 74, 74);">
                     <h1>Hold 1</h1>
                     <h3>Holdnavn: </h3>
                     <input id="hold1-navn" placeholder="Indtast Hold" type="text" ></input>
@@ -206,9 +270,11 @@ function clickEvent() {
                     <input name="studieretning1" id="elektronik" type="radio"></input>
                     <label for="elektronik"> Elektronik </label></br>
                     <p id="newline"></p>
-
+                    <h4>Tid: </h4>
                     <input id="hold1-tid" placeholder="Indtast tid i sek" type="text" ></input>
                     <p id="newline"></p>
+                    <br>
+                    <br>
                     <button onclick="clickEvent()" id="gem" placeholder="Indtast navn" type="button" >Gem oplysninger</button>
                     
                     
@@ -216,7 +282,7 @@ function clickEvent() {
                     
                 </div>
  
-                    <div style="width: 300px; display: table-cell; background-color: gold;">
+                    <div style="width: 500px; display: table-cell;  background-color: rgb(255, 208, 32);">
                     <h1>Hold 2</h1>
                     <h3>Holdnavn: </h3>
                     <input id="hold2-navn" placeholder="Indtast hold" type="text"></input>
@@ -237,23 +303,40 @@ function clickEvent() {
                     <input name="studieretning2" id="elektronik" type="radio"></input>
                     <label for="elektronik"> Elektronik </label></br>
                     <p id="newline"></p>
+                    <h4>Tid: </h4>
                     <input id="hold2-tid" placeholder="Indtast tid i sek" type="text" ></input>
                     
                 </div>
             </div>
         </div>
-        <div id="highscoreElement"></div>
-            <div style="width: 760px; display: table-cell; background-color: red;">
-            <h1>Highscore</h1>
-            <div id="highscore-container"></div>
-        </div>
 
-  
-        <div id="olhighscoreElement">
-            <div style="width: 760px; display: table-cell; background-color: gold;">
-            <h1>Ølscore</h1>
-            <div id="ol-container"></div>
-        </div>
+
+
+        
+        
+        <div style="width: 100%; display: table; overflow: auto">
+            <div style="display: table-row">
+              <div style="width: 500px; display: table-cell; background-color: #EBC907;">
+                <div id="highscoreElement">
+                  <h1>
+                <img src="drinking.gif" alt="beers" style="float: right;">
+                    Highscore
+                  </h1>
+                  <div id="highscore-container" style="width: 100%; table-layout: fixed; overflow: auto;"></div>
+                </div>
+              </div>
+              <div style="width: 500px; display: table-cell; background-color:rgb(236, 74, 74);">
+                <div id="olhighscoreElement">
+                  <h1>
+                    Ølscore</h1>
+                    <img src="running.gif" alt="beers" style="float: right;">
+                    
+                  <div id="ol-container" style="width: 100%; table-layout: fixed; overflow: auto;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
         <script>
             getData();
         </script>
