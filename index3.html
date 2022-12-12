@@ -168,6 +168,15 @@ function clickEvent() {
     
 }
 
+function sletEvent() {
+
+axios.delete('http://localhost:8080/'+ document.getElementById("hold1-navn").value)
+  .then(response => {
+
+  }).catch(error => alert('Could not get data'));
+}
+
+
 </script>
     <head>
         <title> Bytebattle </title>
@@ -183,10 +192,8 @@ function clickEvent() {
           font-family: Arial, sans-serif;
             font-size: 50px;
             font-style:  Lucida;
-            color: black;
-          
+            color: black; 
         }
-
     
         p {
           font-size: 18px;
@@ -201,7 +208,7 @@ function clickEvent() {
           background-color: olive;
           color: black;
           
-          padding: 30px 100px;
+          padding: 30px 90px;
           text-decoration: none;
           border-radius: 5px;
         }
@@ -215,7 +222,7 @@ function clickEvent() {
         height: 15px;
         }
         input[type="radio"]:hover {
-        background-color: ;
+        background-color: white ;
         cursor: pointer;
         }
         input::placeholder {
@@ -276,6 +283,8 @@ function clickEvent() {
                     <br>
                     <br>
                     <button onclick="clickEvent()" id="gem" placeholder="Indtast navn" type="button" >Gem oplysninger</button>
+                    <button onclick="sletEvent()" id="slet" type="button" >Slet hold</button>
+                    
                     
                     
                     
