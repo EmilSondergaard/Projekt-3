@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <link rel="shortcut icon" href="#">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.3/js/tabulator.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/3.5.3/css/tabulator.min.css">
+    </link>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+
+        var holdNavn1;
+        var holdNavn2;
+        var tid1;
+        var tid2;
+        var highscore = [];
+        var result = [];
+        var uddannelse;
+        var litres;
+        var sw = 0;
+        var st = 0;
+        var e = 0;
+        var ee = 0;
+        var bt = 0;
+        var mt = 0;
+        var kt = 0;
+
+        function sortData() {
+            console.log(result);
+            var highscoreElement = document.createElement("h1");
+            highscoreElement.value = "Highscore";
+            highscore = result;
+
+            highscore.sort((a, b) => a.Time - b.Time);
+            const container1 = document.getElementById("highscore-container");
+            container1.innerHTML = "";
+            for (let index = 0; index < 5; index++) {
+                if (highscore[index]) {
+                    let item = document.createElement("h2");
+                    item.innerHTML = `${index+1}. Navn: ${highscore[index].Team_Name} - Time: ${highscore[index].Time} sekunder.`;
+                    container1.appendChild(item);
+                }
+            }
+
+            //først reset tællere
+            sw = 0;
+            st = 0;
+            e = 0;
+            ee = 0;
+            bt = 0;
+            mt = 0;
+            kt = 0;
+
+            //optæl antal liter
+            result.forEach(score=>{
+                switch (score.Field_of_Study) {
+                    case "Softwareteknologi":
+                        sw++;
+                        break;
+                    case "Elektrisk Energiteknologi":
+                        ee++;
+                        break;
+                    case "Bioteknologi":
+                        bt++;
+                        break;
+                    case "Kemiteknologi":
+                        kt++;
+                        break;
+                    case "Maskinteknik":
+                        mt++;
+                        break;
+                    case "Sundhedsteknologi":
+                        st++;
+                        break;
+                    case "Elektronik":
+                        e++;
+                        break;
+                
+                    default:
+                        break;
+                }
+            });
+
+            // erstat html elementerne med ølscore * 1.32
+            document.getElementById("Software-beerscore").textContent=sw*1.32+" Liter Øl";
+            document.getElementById("elektriskenergiteknologi-beerscore").textContent=ee*1.32+" Liter Øl";
+            document.getElementById("bioteknologi-beerscore").textContent=bt*1.32+" Liter Øl";
+            document.getElementById("kemiteknologi-beerscore").textContent=kt*1.32+" Liter Øl";
+            document.getElementById("maskinteknik-beerscore").textContent=mt*1.32+" Liter Øl";
+            document.getElementById("sundhedsteknologi-beerscore").textContent=st*1.32+" Liter Øl";
+            document.getElementById("elektronik-beerscore").textContent=e*1.32+" Liter Øl";
+        }
+
+
+        function getStudy(id) {
+            var beerElement = document.createElement("h1");
+            beerElement.value = "Ølscore";
+            if (document.getElementById(`softwareteknologi${id}`).checked == true) {
+                uddannelse = "Softwareteknologi";
+            } else if (document.getElementById(`elektriskenergiteknologi${id}`).checked == true) {
+                uddannelse = "Elektrisk Energiteknologi";
+            } else if (document.getElementById(`bioteknologi${id}`).checked == true) {
+                uddannelse = "Bioteknologi";
+            } else if (document.getElementById(`kemiteknologi${id}`).checked == true) {
+                uddannelse = "Kemiteknologi";
+            } else if (document.getElementById(`maskinteknik${id}`).checked == true) {
+                uddannelse = "Maskinteknik";
+            } else if (document.getElementById(`sundhedsteknologi${id}`).checked == true) {
+                uddannelse = "Sundhedsteknologi";
+            } else if (document.getElementById(`elektronik${id}`).checked == true) {
+                uddannelse = "Elektronik";
+            }
+            return uddannelse;
+        }
+
+
+        function sendData(id) {
+            console.log("sending data");
+            axios.post('http://localhost:8080/',
+                {
+                    "Team_Name": document.getElementById(`hold${id}-navn`).value,
+                    "Field_of_Study": getStudy(id),
+                    "Time": document.getElementById(`hold${id}-tid`).value ?? ""
+                })
+                .then(response => { }).catch(error => alert('Try again'));     
+            console.log("sent data");
+        }
+
+        function getData() {
+            console.log("fetching data");
+            axios.get('http://localhost:8080/sendAllData')
+                .then(response => {
+                    result = response.data;
+                    sortData();
+
+                }).catch(error => alert('Could not get data'));
+        }
+
+
+        function clickEvent() {
+            sendData(1);
+            sendData(2);
+            getData();
+        }
+
+        function deleteTeam() {
+            axios.delete('http://localhost:8080/'+document.getElementById("hold1-navn").value)
+                .then(response => {
+                getData();
+                sortData();    
+                console.log("Team is now deleted")
+                }).catch(error => alert('Could not delete team'));
+        }
+
+    </script>
+    <head>
+        <title> Bytebattle </title>
+        <meta chjarset = "uft-8">
+        
+        <style>
+
+        body {
+          background-color: rgb(255, 208, 32);
+          font-family: Arial, sans-serif;
+        }
+        h1 {
+          font-family: Arial, sans-serif;
+            font-size: 50px;
+            font-style:  Lucida;
+            color: black;
+          
+        }
+
+    
+        p {
+          font-size: 18px;
+          text-align: justify;
+        }
+
+        button {
+          display: inline-block;
+          font-family: Arial, sans-serif;
+          font-size: 25px;
+          font-weight: bold;
+          background-color: olive;
+          color: black;
+          
+          padding: 30px 80px;
+          text-decoration: none;
+          border-radius: 5px;
+        }
+        button:hover {
+          background-color: orange;
+        }
+
+        input[type="radio"] {
+        color: blue;
+        width: 15px;
+        height: 15px;
+        }
+        input[type="radio"]:hover {
+        background-color:black ;
+        cursor: pointer;
+        }
+        input::placeholder {
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        color: black;
+        }
+        img {
+        width: 350px;
+        height: auto;
+        margin: auto;
+        }
+
+        </style>
+
+        <div  style="width: 100% ; display: table; overflow: auto; text-align: center; background-color: #FFD020;">
+        <h1 style="font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; color: black;">
+            
+            <img src="beers.gif" alt="beers" style="float: left;">
+            <img src="beers.gif" alt="beers" style="float: right;">
+            <h1>BYTEBATTLE</h1>
+        </div>
+        </body>
+        </html>
+
+
+
+<html>
+    <header> 
+     </header>
+    <body>
+        <div style="width: 100%; display: table; overflow: auto">
+            <div style="display: table-row">
+                <div style="width: 500px; display: table-cell; background-color: rgb(236, 74, 74);">
+                    <h1>Hold 1</h1>
+                    <h3>Holdnavn: </h3>
+                    <input id="hold1-navn" placeholder="Indtast Hold" type="text" ></input>
+                    </br>
+                    <h4>Studieretning: </h4>
+                    <input name="studieretning1" id="softwareteknologi1" type="radio"></input>
+                    <label for="softwareteknologi"> Softwareteknologi </label></br>
+                    <input name="studieretning1" id="elektriskenergiteknologi1" type="radio"></input>
+                    <label for="elektriskenergiteknologi"> Elektrisk energiteknologi </label></br>
+                    <input name="studieretning1" id="bioteknologi1" type="radio"></input>
+                    <label for="bioteknologi"> Bioteknologi </label></br>
+                    <input name="studieretning1" id="kemiteknologi1" type="radio"></input>
+                    <label for="kemiteknologi"> Kemi- og fødevareteknologi </label></br>
+                    <input name="studieretning1" id="maskinteknik1" type="radio"></input>
+                    <label for="maskinteknik"> Maskinteknik </label></br>
+                    <input name="studieretning1" id="sundhedsteknologi1" type="radio"></input>
+                    <label for="sundhedsteknologi"> Sundhedsteknologi </label></br>
+                    <input name="studieretning1" id="elektronik1" type="radio"></input>
+                    <label for="elektronik"> Elektronik </label></br>
+                    <p id="newline"></p>
+                    <h4>Tid: </h4>
+                    <input id="hold1-tid" placeholder="Indtast tid i sek" type="text" ></input>
+                    <p id="newline"></p>
+                    <br>
+                    <br>
+                    <button onclick="clickEvent()" id="gem" placeholder="Indtast navn" type="button" >Gem oplysninger</button>
+                    <button onclick="deleteTeam()" id="slet"  type="button" >Slet hold</button>
+                    
+                    
+                    
+                </div>
+ 
+                    <div style="width: 500px; display: table-cell;  background-color: rgb(255, 208, 32);">
+                    <h1>Hold 2</h1>
+                    <h3>Holdnavn: </h3>
+                    <input id="hold2-navn" placeholder="Indtast hold" type="text"></input>
+                    </br>
+                    <h4>Studieretning: </h4>
+                    <input name="studieretning2" id="softwareteknologi2" type="radio"></input>
+                    <label for="softwareteknologi"> Softwareteknologi </label></br>
+                    <input name="studieretning2" id="elektriskenergiteknologi2" type="radio"></input>
+                    <label for="elektriskenergiteknologi"> Elektrisk energiteknologi </label></br>
+                    <input name="studieretning2" id="bioteknologi2" type="radio"></input>
+                    <label for="bioteknologi"> Bioteknologi </label></br>
+                    <input name="studieretning2" id="kemiteknologi2" type="radio"></input>
+                    <label for="kemiteknologi"> Kemi- og fødevareteknologi </label></br>
+                    <input name="studieretning2" id="maskinteknik2" type="radio"></input>
+                    <label for="maskinteknik"> Maskinteknik </label></br>
+                    <input name="studieretning2" id="sundhedsteknologi2" type="radio"></input>
+                    <label for="sundhedsteknologi"> Sundhedsteknologi </label></br>
+                    <input name="studieretning2" id="elektronik2" type="radio"></input>
+                    <label for="elektronik"> Elektronik </label></br>
+                    <p id="newline"></p>
+                    <h4>Tid: </h4>
+                    <input id="hold2-tid" placeholder="Indtast tid i sek" type="text" ></input>
+                    
+                </div>
+            </div>
+        </div>
+
+
+
+        
+        
+        <div style="width: 100%; display: table; overflow: auto">
+            <div style="display: table-row">
+              <div style="width: 500px; display: table-cell; background-color: #EBC907;">
+                <div id="highscoreElement">
+                  <h1>
+                <img src="drinking.gif" alt="beers" style="float: right;">
+                    Highscore
+                  </h1>
+                  <div id="highscore-container" style="width: 100%; table-layout: fixed; overflow: auto;"></div>
+                </div>
+              </div>
+              <div style="width: 500px; display: table-cell; background-color:rgb(236, 74, 74);">
+                <div id="olhighscoreElement">
+                  <h1>
+                    Ølscore</h1>
+                    <img src="running.gif" alt="beers" style="float: right;">
+                    
+                  <div id="ol-container" style="width: 100%; table-layout: fixed; overflow: auto;"></div>
+                  <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="Software-beerscore">Software har drukket: </label>
+                    <p id="Software-beerscore"></p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="elektriskenergiteknologi-beerscore">Elektriskenergiteknologi har drukket:</label>
+                    <p id="elektriskenergiteknologi-beerscore"></p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="bioteknologi-beerscore">Bioteknologi har drukket:</label>
+                    <p id="bioteknologi-beerscore"></p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="kemiteknologi-beerscore">Kemiteknologi har drukket:</label>
+                    <p id="kemiteknologi-beerscore"></p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="maskinteknik-beerscore">Maskinteknik har drukket:</label>
+                    <p id="maskinteknik-beerscore"></p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="sundhedsteknologi-beerscore">Sundhedsteknologi har drukket:</label>
+                    <p id="sundhedsteknologi-beerscore"></p>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <label for="elektronik-beerscore">Elektronik har drukket:</label>
+                    <p id="elektronik-beerscore"></p>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+        <script>
+            getData();
+        </script>
+    </body>
+</html>
+
+<!-- <style>
+    .vertical {
+        border-left: 100px solid black;
+        height: 300;
+        position: relative;
+        left: 50%;
+    }
+</style> -->
