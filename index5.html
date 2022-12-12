@@ -140,14 +140,14 @@
         }
 
 
-        function clickEvent() {
-            sendData(1);
-            sendData(2);
+        function clickEvent(id) {
+            sendData(id);
             getData();
         }
 
-        function deleteTeam() {
-            axios.delete('http://localhost:8080/'+document.getElementById("hold1-navn").value)
+
+        function deleteTeam(id) {
+            axios.delete('http://localhost:8080/'+document.getElementById(`hold${id}-navn`).value)
                 .then(response => {
                 getData();
                 sortData();    
@@ -262,8 +262,8 @@
                     <p id="newline"></p>
                     <br>
                     <br>
-                    <button onclick="clickEvent()" id="gem" placeholder="Indtast navn" type="button" >Gem oplysninger</button>
-                    <button onclick="deleteTeam()" id="slet"  type="button" >Slet hold</button>
+                    <button onclick="clickEvent(1)" id="gem" placeholder="Indtast navn" type="button" >Gem oplysninger</button>
+                    <button onclick="deleteTeam(1)" id="slet"  type="button" >Slet hold</button>
                     
                     
                     
@@ -292,6 +292,8 @@
                     <p id="newline"></p>
                     <h4>Tid: </h4>
                     <input id="hold2-tid" placeholder="Indtast tid i sek" type="text" ></input>
+                    <button onclick="clickEvent(2)" id="gem" placeholder="Indtast navn" type="button" >Gem oplysninger</button>
+                    <button onclick="deleteTeam(2)" id="slet"  type="button" >Slet hold</button>
                     
                 </div>
             </div>
